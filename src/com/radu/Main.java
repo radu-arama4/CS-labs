@@ -1,6 +1,7 @@
 package com.radu;
 
 import com.radu.data.CustomItem;
+import com.radu.util.SerializationDeserializationUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -9,7 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
@@ -26,9 +26,8 @@ public class Main {
             items.add(convertToCustomItemObject(element));
         }
 
-        items.forEach(customItem -> {
-            System.out.println(customItem.toString());
-        });
+        SerializationDeserializationUtil.serialize(items);
+        SerializationDeserializationUtil.deserialize();
     }
 
     public static String readContent(String fileName) throws IOException {
@@ -63,14 +62,14 @@ public class Main {
         String currentField = "";
         String currentValue = "";
 
-        element.replaceFirst("Policy Setting Name", "PolicySettingName");
+        element = element.replaceFirst("Policy Setting Name", "PolicySettingName");
 
         boolean firstType = true;
 
         for (String word : element.split("\\s+")) {
             if (fields.contains(word)) {
                 String info = currentValue.replaceFirst(":", "").replaceAll("\"", "")
-                        .trim().replaceAll(" +", " ").replace("\n", " ").replace("\r", " ");
+                        .trim().replaceAll(" +", " ");
                 switch (currentField) {
                     case "type": {
                         if(firstType){

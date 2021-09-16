@@ -1,6 +1,11 @@
 package com.radu.data;
 
-public class CustomItem {
+import java.io.Serializable;
+import java.util.UUID;
+
+public class CustomItem implements Serializable {
+    private static final long serialVersionUID = 239847239321L;
+
     String type;
     String description;
     String info;
